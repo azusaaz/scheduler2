@@ -1,11 +1,20 @@
 import React from 'react'
 import Header from './Header'
+import Show from './Show'
+import Empty from './Empty'
 import './styles.scss'
 
 export default function Appointment(props) {
   return (
-    <div>
-       <article className="appointment">{props.time}</article>
-    </div>
+    <article className="appointment">
+      <Header></Header>
+      {props.time}
+      { props.id != "last" && props.interview ? 
+        <Show student={props.interview.student} interviewer={props.interview.interviewer}/> 
+        :
+        <Empty />
+      }
+    </article>
+
   )
 }
