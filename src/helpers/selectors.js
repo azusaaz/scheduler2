@@ -8,6 +8,22 @@ export function getAppointmentsForDay(state, day){
   }
   return arr;
 }
+
+export function getInterviewersForDay(state, day){
+  let set = new Set();
+  let filtered = state.days && state.days.find(d => d.name === day);
+  if (filtered && filtered.appointments){
+    filtered.appointments.forEach(id=>{
+      
+      if (state.appointments[id].interview){
+        set.add(state.interviewers[state.appointments[id].interview.interviewer]);
+      }
+    })
+  }
+
+  return set.size ? [...set] : [];
+}
+
 export function getInterview(state, interview){
   
   if (interview != null) {
