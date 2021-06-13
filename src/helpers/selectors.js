@@ -11,17 +11,15 @@ export function getAppointmentsForDay(state, day){
 }
 
 export function getInterviewersForDay(state, day){
-  let set = new Set();
+  let arr = [];
   let filtered = state.days && state.days.find(d => d.name === day);
-  if (filtered && filtered.appointments){
+  if (filtered && filtered.interviewers){
     filtered.appointments.forEach(id=>{
-      if (state.appointments[id] && state.appointments[id].interview){
-        set.add(state.interviewers[state.appointments[id].interview.interviewer]);
-      }
+      arr.push(state.interviewers[id]);
     })
   }
 
-  return set.size ? [...set] : [];
+  return arr;
 }
 
 export function getInterview(state, interview){
