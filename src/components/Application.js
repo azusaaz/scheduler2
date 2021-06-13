@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Button from "./Button";
-import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
 import Appointment from "./Appointment";
 import Axios from "axios";
-import {getAppointmentsForDay, getInterviewersForDay} from "../helpers/selectors";
+import {getAppointmentsForDay, getInterview, getInterviewersForDay} from "../helpers/selectors";
 
 import "components/Application.scss";
 
@@ -21,10 +19,37 @@ export default function Application(props) {
 
   let dailyAppointments = [];
   let dailyInterviewers = [];
+
   dailyAppointments = getAppointmentsForDay(state, state.day);
   dailyInterviewers = getInterviewersForDay(state, state.day);
 
+
   const setDay = day => setState(prev=>({ ...prev, day }));
+
+  const bookInterview = (id, interview) => {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({
+      ...state, appointments,
+    });
+
+    Axios.put(`http://localhost:8001/api/appointments/${id}`, {
+      interview: interview
+    })
+      .then(res=>{
+          console.log("res", res)
+      })
+
+  }
 
   useEffect(()=>{
     Promise.all([
@@ -74,6 +99,7 @@ export default function Application(props) {
             time={appointment.time}
             interview={appointment.interview}
             interviewers={dailyInterviewers}
+            bookInterview={bookInterview}
             />
           )
         }

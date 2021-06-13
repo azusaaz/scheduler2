@@ -6,6 +6,7 @@ export function getAppointmentsForDay(state, day){
       arr.push(state.appointments[id]);
     })
   }
+
   return arr;
 }
 
@@ -14,8 +15,7 @@ export function getInterviewersForDay(state, day){
   let filtered = state.days && state.days.find(d => d.name === day);
   if (filtered && filtered.appointments){
     filtered.appointments.forEach(id=>{
-      
-      if (state.appointments[id].interview){
+      if (state.appointments[id] && state.appointments[id].interview){
         set.add(state.interviewers[state.appointments[id].interview.interviewer]);
       }
     })
