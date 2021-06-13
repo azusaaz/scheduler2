@@ -9,12 +9,12 @@ import './styles.scss'
 import useVisualMode from 'hooks/useVisualMode'
 
 export default function Appointment(props) {
-
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
   const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
   
 
   const { mode, transition, back } = useVisualMode(
@@ -36,6 +36,10 @@ export default function Appointment(props) {
     transition("CONFIRM");
   }
 
+  function edit() {
+    transition("EDIT");
+  }
+
   function confirm() {
     transition("SAVING");
     props.cancelInterview(props.id);
@@ -52,6 +56,7 @@ export default function Appointment(props) {
           student={props.interview && props.interview.student}
           interviewer={props.interview && props.interview.interviewer}
           onDelete={del}
+          onEdit={edit}
         />
       )}
       {mode === CREATE && (
@@ -67,6 +72,14 @@ export default function Appointment(props) {
         <Confirm 
         onCancel={back}
         onConfirm={confirm}
+        />
+      )}
+      {mode === EDIT && (
+        <Form 
+          interviewers={props.interviewers}
+          onSave={save}
+          name={props.interview.student}
+          interviewer={props.interview.interviewer.id}
         />
       )}
     </article>
