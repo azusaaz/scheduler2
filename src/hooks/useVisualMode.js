@@ -8,7 +8,8 @@ export default function useVisualMode(initial){
 
   function transition(mode, replace) {
     if (replace){
-      setHistory(tmp[tmp.length-1] = mode); 
+      tmp[tmp.length-1] = mode
+      setHistory(tmp); 
     } else {
       tmp.push(mode)
       setHistory(tmp);

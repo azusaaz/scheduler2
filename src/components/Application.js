@@ -42,13 +42,7 @@ export default function Application(props) {
       appointments
     })
 
-    Axios.delete(`http://localhost:8001/api/appointments/${id}`)
-      .then(res=>{
-        console.log("res", res)
-      })
-      .catch(e=>{
-        console.log("Error: ", e)
-      })
+    return Axios.delete(`http://localhost:8001/api/appointments/${id}`)
 
   }
   const bookInterview = (id, interview) => {
@@ -68,15 +62,9 @@ export default function Application(props) {
       appointments,
     });
 
-    Axios.put(`http://localhost:8001/api/appointments/${id}`, {
+    return Axios.put(`http://localhost:8001/api/appointments/${id}`, {
       interview: interview
     })
-      .then(res=>{
-          console.log("res", res)
-      })
-      .catch(e=>{
-        console.log("Error: ", e)
-      })
 
   }
 
