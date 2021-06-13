@@ -26,6 +26,30 @@ export default function Application(props) {
 
   const setDay = day => setState(prev=>({ ...prev, day }));
 
+  const cancelInterview = (id) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    }
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+
+    setState({
+      ...state,
+      appointments
+    })
+
+    Axios.delete(`http://localhost:8001/api/appointments/${id}`)
+      .then(res=>{
+        console.log("res", res)
+      })
+      .catch(e=>{
+        console.log("Error: ", e)
+      })
+
+  }
   const bookInterview = (id, interview) => {
     console.log(id, interview);
     const appointment = {
@@ -39,7 +63,8 @@ export default function Application(props) {
     };
 
     setState({
-      ...state, appointments,
+      ...state, 
+      appointments,
     });
 
     Axios.put(`http://localhost:8001/api/appointments/${id}`, {
@@ -47,6 +72,9 @@ export default function Application(props) {
     })
       .then(res=>{
           console.log("res", res)
+      })
+      .catch(e=>{
+        console.log("Error: ", e)
       })
 
   }
@@ -100,6 +128,7 @@ export default function Application(props) {
             interview={appointment.interview}
             interviewers={dailyInterviewers}
             bookInterview={bookInterview}
+            cancelInterview={cancelInterview}
             />
           )
         }
