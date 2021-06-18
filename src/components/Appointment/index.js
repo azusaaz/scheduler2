@@ -50,7 +50,7 @@ export default function Appointment(props) {
   }
 
   function confirm() {
-    transition("SAVING");
+    transition("SAVING", true);
     props.cancelInterview(props.id)
       .then(res=>{
         transition("EMPTY");

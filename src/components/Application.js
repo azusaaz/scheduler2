@@ -28,19 +28,6 @@ export default function Application(props) {
   const setDay = day => setState(prev=>({ ...prev, day }));
 
   const cancelInterview = (id) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    }
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    }
-
-    setState({
-      ...state,
-      appointments
-    })
 
     return Axios.delete(`http://localhost:8001/api/appointments/${id}`)
 
